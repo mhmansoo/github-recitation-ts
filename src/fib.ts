@@ -12,4 +12,5 @@ export function fibonacci(n: number): number {
     b = next;
   }
   return b;
+
 }
