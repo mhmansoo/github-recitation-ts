@@ -1,9 +1,6 @@
 // src/fibRoute.ts
 import { Request, Response } from "express";
-import fibonacci from "./fib"; // <-- if fib.ts uses default export
-
-// If fib.ts has `export function fib(...)`, then instead do:
-// import { fib as fibonacci } from "./fib";
+import { fibonacci } from "./fib";
 
 export default function fibRoute(req: Request, res: Response): void {
   const { num } = (req.params as { num?: string });
@@ -22,5 +19,6 @@ export default function fibRoute(req: Request, res: Response): void {
   const value = fibonacci(n);
   res.send(`fibonacci(${n}) is ${value}`);
 }
+
 
 
