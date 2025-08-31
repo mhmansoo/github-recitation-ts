@@ -1,9 +1,15 @@
 // src/fibRoute.ts
-import type { Request, Response } from "express";
-import { fibonacci } from "./fib";
+import fibonacci from "./fib";
 
-export default function fibRoute(req: Request, res: Response): void {
-  const numParam: string | undefined = req.params?.num;
+// Minimal, explicit types (no Express dependency needed)
+type FibReq = { params: { num?: string } };
+type FibRes = {
+  status: (code: number) => FibRes;
+  send: (body: string) => void;
+};
+
+export default function fibRoute(req: FibReq, res: FibRes): void {
+  const numParam = req.params.num; // string | undefined (not any)
 
   if (typeof numParam !== "string") {
     res.status(400).send("Missing route parameter 'num'");
@@ -16,7 +22,7 @@ export default function fibRoute(req: Request, res: Response): void {
     return;
   }
 
-  const fibN = fibonacci(n);
+  const fibN = fibonacci(n); // number
   const result =
     fibN < 0
       ? `fibonacci(${n}) is undefined`
