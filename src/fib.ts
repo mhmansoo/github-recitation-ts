@@ -1,5 +1,5 @@
 // src/fib.ts
-export default function fibonacci(n: number): number {
+export function fibonacci(n: number): number {
   if (n < 0) return -1;
   if (n === 0) return 0;
   if (n === 1) return 1;
@@ -7,7 +7,7 @@ export default function fibonacci(n: number): number {
   let a = 0;
   let b = 1;
   for (let i = 2; i <= n; i++) {
-    const next = a + b; // both are number
+    const next = a + b;
     a = b;
     b = next;
   }
