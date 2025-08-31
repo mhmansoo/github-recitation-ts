@@ -1,22 +1,25 @@
 // src/fibRoute.ts
-import { type Request, type Response } from "express";
-import { fib } from "./fib"; // make sure fib.ts has `export function fib(n: number): number`
+import { Request, Response } from "express";
+import { fib } from "./fib";
 
-// Define the expected params shape
+// Expected route params: /fib/:num
 type FibParams = { num: string };
 
-export default (req: Request<FibParams>, res: Response) => {
-  const { num } = req.params;      // num: string
-  const n = parseInt(num, 10);
+export default function fibRoute(req: Request<FibParams>, res: Response): void {
+  const numParam = req.params?.num;    // string from URL
 
-  // Input validation
-  if (isNaN(n) || n < 0) {
-    return res.status(400).send(`fibonacci(${num}) is undefined`);
+  if (typeof numParam !== "string") {
+    res.status(400).send("Missing route parameter 'num'");
+    return;
   }
 
-  const fibN = fib(n);             // fib returns number
-  const result = `fibonacci(${n}) is ${fibN}`;
+  const n = Number.parseInt(numParam, 10);
+  if (Number.isNaN(n) || n < 0) {
+    res.status(400).send(`Invalid number: "${numParam}"`);
+    return;
+  }
 
-  res.send(result);
-};
+  const fibN = fib(n);                 // fib: (number) => number
+  res.send(`fibonacci(${n}) is ${fibN}`);
+}
 
