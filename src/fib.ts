@@ -1,9 +1,15 @@
 // src/fib.ts
-const fibonacci = (n: number): number => {
+export function fibonacci(n: number): number {
   if (n < 0) return -1;
   if (n === 0) return 0;
   if (n === 1) return 1;
-  return fibonacci(n - 1) + fibonacci(n - 2);
-};
 
-module.exports = fibonacci; // OK because `fibonacci` is typed
+  let a = 0;
+  let b = 1;
+  for (let i = 2; i <= n; i++) {
+    const next = a + b;
+    a = b;
+    b = next;
+  }
+  return b;
+}
