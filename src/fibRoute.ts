@@ -13,16 +13,15 @@ export default function fibRoute(req: Req, res: Res): void {
   }
 
   const n = parseInt(numParam, 10);
-  if (isNaN(n)) {
+  if (Number.isNaN(n)) {
     res.status(400).send(`Invalid number: ${numParam}`);
     return;
   }
 
   const fibN = fibonacci(n);
-  const result =
-    fibN < 0
-      ? `fibonacci(${n}) is undefined`
-      : `fibonacci(${n}) is ${fibN}`;
+  const result = fibN < 0
+    ? `fibonacci(${n}) is undefined`
+    : `fibonacci(${n}) is ${fibN}`;
 
   res.send(result);
 }
